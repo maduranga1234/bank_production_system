@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 564599437233.dkr.ecr.eu-north-1.amazonaws.com
+  build:
+    commands:
+      - docker build -t bank-prediction-system .
+      - docker tag bank-prediction-system:latest 564599437233.dkr.ecr.eu-north-1.amazonaws.com/bank-prediction-system:latest
+  post_build:
+    commands:
+      - docker push 564599437233.dkr.ecr.eu-north-1.amazonaws.com/bank-prediction-system:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"bank-prediction-system","imageUri":"%s"}]' 564599437233.dkr.ecr.eu-north-1.amazonaws.com/bank-prediction-system:latest > imagedefinitions.json   
+artifacts:
+  files: 
+  - imagedefinitions.json

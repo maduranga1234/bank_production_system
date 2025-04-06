@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Client Subscription Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-card {
+            max-width: 700px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background: white;
+            padding: 2rem;
+        }
+        .form-title {
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 0.6rem;
+        }
+        #result {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-card">
+            <h2 class="form-title text-center">📊 Bank Client Subscription Prediction</h2>
+            <form id="predictForm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="balance" class="form-label">Avg Yearly Balance (€)</label>
+                        <input type="number" class="form-control" id="balance" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="job" class="form-label">Job</label>
+                        <select class="form-select" id="job" required>
+                            <option value="admin.">Admin</option>
+                            <option value="blue-collar">Blue-collar</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="housemaid">Housemaid</option>
+                            <option value="management">Management</option>
+                            <option value="retired">Retired</option>
+                            <option value="self-employed">Self-employed</option>
+                            <option value="services">Services</option>
+                            <option value="student">Student</option>
+                            <option value="technician">Technician</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="marital" class="form-label">Marital Status</label>
+                        <select class="form-select" id="marital" required>
+                            <option value="divorced">Divorced</option>
+                            <option value="married">Married</option>
+                            <option value="single">Single</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="education" class="form-label">Education Level</label>
+                        <select class="form-select" id="education" required>
+                            <option value="basic.4y">Basic 4 years</option>
+                            <option value="basic.6y">Basic 6 years</option>
+                            <option value="basic.9y">Basic 9 years</option>
+                            <option value="high.school">High School</option>
+                            <option value="illiterate">Illiterate</option>
+                            <option value="professional.course">Professional Course</option>
+                            <option value="university.degree">University Degree</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="default" class="form-label">Credit in Default?</label>
+                        <select class="form-select" id="default" required>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="housing" class="form-label">Housing Loan?</label>
+                        <select class="form-select" id="housing" required>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="loan" class="form-label">Personal Loan?</label>
+                        <select class="form-select" id="loan" required>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contact" class="form-label">Contact Type</label>
+                        <select class="form-select" id="contact" required>
+                            <option value="cellular">Cellular</option>
+                            <option value="telephone">Telephone</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="day_of_week" class="form-label">Last Contact Day</label>
+                        <select class="form-select" id="day_of_week" required>
+                            <option value="mon">Monday</option>
+                            <option value="tue">Tuesday</option>
+                            <option value="wed">Wednesday</option>
+                            <option value="thu">Thursday</option>
+                            <option value="fri">Friday</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="month" class="form-label">Last Contact Month</label>
+                        <select class="form-select" id="month" required>
+                            <option value="jan">January</option>
+                            <option value="feb">February</option>
+                            <option value="mar">March</option>
+                            <option value="apr">April</option>
+                            <option value="may">May</option>
+                            <option value="jun">June</option>
+                            <option value="jul">July</option>
+                            <option value="aug">August</option>
+                            <option value="sep">September</option>
+                            <option value="oct">October</option>
+                            <option value="nov">November</option>
+                            <option value="dec">December</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="duration" class="form-label">Last Contact Duration (sec)</label>
+                        <input type="number" class="form-control" id="duration" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4">🚀 Predict</button>
+            </form>
+
+            <div id="result" class="alert alert-info mt-4 d-none">
+                <h5 class="mb-2">Prediction Result:</h5>
+                <p id="prediction" class="mb-0 fw-semibold"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#predictForm').on('submit', function (event) {
+            event.preventDefault();
+            const formData = {
+                age: $('#age').val(),
+                balance: $('#balance').val(),
+                job: $('#job').val(),
+                marital: $('#marital').val(),
+                education: $('#education').val(),
+                default: $('#default').val(),
+                housing: $('#housing').val(),
+                loan: $('#loan').val(),
+                contact: $('#contact').val(),
+                day_of_week: $('#day_of_week').val(),
+                month: $('#month').val(),
+                duration: $('#duration').val()
+            };
+
+            $.ajax({
+                url: '/predict',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    $('#prediction').text('Subscription prediction: ' + (response.Subscribed === 1 ? '✅ Subscribed' : '❌ Not Subscribed'));
+                    $('#result').removeClass('d-none');
+                },
+                error: function (xhr, status, error) {
+                    $('#prediction').text('Error: ' + error);
+                    $('#result').removeClass('d-none');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
